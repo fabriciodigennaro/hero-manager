@@ -1,0 +1,13 @@
+<div class="form-container">
+    <h1>{{ action }} hero</h1>
+    <section class="form">
+        <mat-form-field>
+            <mat-label>Enter your hero</mat-label>
+            <input matInput placeholder="pat@example.com" [formControl]="heroName" required>
+            <mat-error *ngIf="heroName.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+    
+          <button mat-raised-button color="primary">Save hero</button>
+    </section>
+
+</div>
