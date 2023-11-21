@@ -2,8 +2,8 @@
     <h1>{{ action }} hero</h1>
     <section class="form">
         <mat-form-field>
-            <mat-label>Enter your hero</mat-label>
-            <input matInput placeholder="pat@example.com" [formControl]="heroName" required>
+            <mat-label>Enter your hero name</mat-label>
+            <input matInput placeholder="hero name" [formControl]="heroName" required>
             <mat-error *ngIf="heroName.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
     
