@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
-import { Hero, HeroResponse } from 'src/app/interfaces/hero.interface';
+
+import { Hero } from 'src/app/interfaces/hero.interface';
 import { HeroesService } from 'src/app/services/heroes.service';
 
 @Component({
@@ -11,27 +13,26 @@ import { HeroesService } from 'src/app/services/heroes.service';
 })
 export class DashboardComponent {
   heroList: Hero[] = [];
-  title: string = 'Hero manager';
+  title: string = 'Heroes manager';
   searchValue = new FormControl('');
-  totalReults: number = 0;
+  heroes$: Observable<Hero[]> = new Observable();
+  page: number = 1;
+  resultsPerPage: number = 5;
+  totalResults: number = 0;
 
   constructor(private _heroesService: HeroesService) {}
 
   ngOnInit() {
+    this.searchHeroes();
     this.getHeroes();
-  }
-
-  getHeroes(page: number = 0): void {
-    this._heroesService
-      .getHeroes()
-      .subscribe((heroesResponse: HeroResponse) => {
-        this.heroList = heroesResponse.heroes.slice(page, page + 5);
-        this.totalReults = heroesResponse.totalResult;
-      });
+    this.searchValue.statusChanges.subscribe(() => this.searchHeroes());
+    this.getTotalResults();
   }
 
   handlePageEvent(pageEvent: PageEvent) {
-    this.getHeroes(5);
+    this.page = pageEvent.pageIndex + 1;
+    this.resultsPerPage = pageEvent.pageSize;
+    this.searchHeroes();
   }
 
   clearSearchForm(): void {
@@ -40,5 +41,29 @@ export class DashboardComponent {
 
   searchFormHasValue(): boolean {
     return this.searchValue.value != undefined && this.searchValue.value != '';
+  }
+
+  private getHeroes() {
+    this.heroes$ = this._heroesService.heroesResultsPage$;
+  }
+
+  private searchHeroes() {
+    const searchValue = this.searchValue.value ?? '';
+    this._heroesService.searchHeroes(
+      searchValue,
+      this.page,
+      this.resultsPerPage
+    );
+  }
+
+  private getTotalResults() {
+    this._heroesService.heroesTotalResults$.subscribe((newTotal) => {
+      this.totalResults = newTotal;
+    });
+  }
+
+  deleteHero(heroId: number) {
+    this._heroesService.deleteHero(heroId);
+    this.searchHeroes();
   }
 }
