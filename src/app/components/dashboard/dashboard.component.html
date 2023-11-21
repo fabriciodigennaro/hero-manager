@@ -17,36 +17,15 @@
     <button mat-raised-button color="primary">Add hero</button>
   </div>
   <mat-list role="list" class="list-container">
-    <div class="row">
-        <mat-list-item role="listitem">Superhero 1 </mat-list-item>
+    <div *ngFor="let hero of heroList" class="row">
+        <mat-list-item role="listitem">{{ hero.name}}</mat-list-item>
           <button mat-stroked-button>Edit</button>
           <button mat-stroked-button color="warn">Delete</button>
-        </div>
-        
-        <div class="row">
-        <mat-list-item role="listitem">Superhero 1 </mat-list-item>
-          <button mat-stroked-button>Edit</button>
-          <button mat-stroked-button color="warn">Delete</button>
-      </div>
-      <div class="row">
-        <mat-list-item role="listitem">Superhero 1 </mat-list-item>
-          <button mat-stroked-button>Edit</button>
-          <button mat-stroked-button color="warn">Delete</button>
-      </div>
-      <div class="row">
-        <mat-list-item role="listitem">Superhero 1 </mat-list-item>
-        <button mat-stroked-button>Edit</button>
-        <button mat-stroked-button color="warn">Delete</button>
-      </div>
-      <div class="row">
-        <mat-list-item role="listitem">Superhero 1 </mat-list-item>
-        <button mat-stroked-button>Edit</button>
-        <button mat-stroked-button color="warn">Delete</button>
-      </div>
+    </div>
   </mat-list>
 
-  <mat-paginator [length]="10"
+  <mat-paginator [length]=totalReults
                     [pageSize]="5"
-                    aria-label="Select page">
+                    (page)="handlePageEvent($event)">
   </mat-paginator>
 </section>

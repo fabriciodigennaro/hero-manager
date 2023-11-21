@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-import { Hero } from '../interfaces/hero.interface';
+import { Hero, HeroResponse } from '../interfaces/hero.interface';
 
 @Injectable({ providedIn: 'root' })
-export class HerosService {
+export class HeroesService {
   private heroesUrl = 'api/heroes';
 
   httpOptions = {
@@ -14,8 +14,8 @@ export class HerosService {
 
   constructor(private http: HttpClient) {}
 
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl);
+  getHeroes(): Observable<HeroResponse> {
+    return this.http.get<HeroResponse>(this.heroesUrl);
   }
 
   getHero(id: number): Observable<Hero> {
