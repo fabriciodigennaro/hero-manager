@@ -6,7 +6,8 @@ import { HeroFormComponent } from './components/hero-form/hero-form.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'create', component: HeroFormComponent},
+  { path: 'create', component: HeroFormComponent },
+  { path: 'edit/:id', component: HeroFormComponent },
   { path: '**', redirectTo: 'dashboard' },
 ];
 
