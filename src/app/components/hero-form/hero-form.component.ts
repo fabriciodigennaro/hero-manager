@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { Hero } from 'src/app/interfaces/hero.interface';
 import { HeroesService } from 'src/app/services/heroes.service';
 
@@ -11,7 +11,7 @@ import { HeroesService } from 'src/app/services/heroes.service';
   styleUrls: ['./hero-form.component.scss'],
 })
 export class HeroFormComponent implements OnInit, OnDestroy {
-  private subscriptions: Subscription[] = [];
+  unsubscribe = new Subject();
   heroId: number = 0;
   heroToEdit: Hero | null = null;
   form: FormGroup;
@@ -30,33 +30,47 @@ export class HeroFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const paramsSubscription = this.route.params.subscribe((params) => {
-      this.heroId = params['id'];
-      this.isEditMode = this.heroId != undefined;
-      if (this.isEditMode) {
-        this.loadDataToEdit();
-      }
-    });
-    this.subscriptions.push(paramsSubscription);
+    this.heroId = this.route.snapshot.params['id'];
+    this.isEditMode = this.heroId != undefined;
+    if (this.isEditMode) {
+      this.loadDataToEdit();
+    }
   }
 
-  fetchHeroToEdit(): void {
-    const heroesSubscription = this._heroesService.hero$.subscribe((hero) => {
-      if (hero) {
-        this.heroToEdit = hero;
-        this.setFormValues(hero);
-      }
-    });
-    this.subscriptions.push(heroesSubscription);
+  private fetchHeroToEdit(): void {
+    this._heroesService.hero$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe((hero) => {
+        if (hero) {
+          this.heroToEdit = hero;
+          this.setFormValues(hero);
+        }
+      });
   }
 
-  loadDataToEdit(): void {
+  private loadDataToEdit(): void {
     this.fetchHeroToEdit();
     this._heroesService.getHeroById(this.heroId);
   }
 
-  setFormValues(hero: Hero): void {
+  private setFormValues(hero: Hero): void {
     this.form.patchValue(hero);
+  }
+
+  private editHero() {
+    this._heroesService.updateHero({
+      id: this.heroId,
+      name: this.form.get('name')?.value,
+      description: this.form.get('description')?.value,
+    });
+  }
+
+  private createHero() {
+    this._heroesService.createHero({
+      id: 0,
+      name: this.form.get('name')?.value,
+      description: this.form.get('description')?.value,
+    });
   }
 
   isInvalidField(fieldName: string): boolean {
@@ -66,22 +80,7 @@ export class HeroFormComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.form.valid) {
-      console.log(this.heroId);
-
-      if (this.isEditMode) {
-        this._heroesService.updateHero({
-          id: this.heroId,
-          name: this.form.get('name')?.value,
-          description: this.form.get('description')?.value,
-        });
-      } else {
-        this._heroesService.createHero({
-          id: 0,
-          name: this.form.get('name')?.value,
-          description: this.form.get('description')?.value,
-        });
-      }
-
+      this.isEditMode ? this.editHero() : this.createHero();
       this.redirectToDashboard();
     }
   }
@@ -91,6 +90,7 @@ export class HeroFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.unsubscribe.next(null);
+    this.unsubscribe.complete();
   }
 }
