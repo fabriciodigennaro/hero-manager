@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { HeroesService } from 'src/app/services/heroes.service';
 
 @Component({
   selector: 'app-hero-form',
@@ -8,13 +10,32 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class HeroFormComponent {
   action: string = 'Create';
-  heroName = new FormControl('', [Validators.required]);
+  form: FormGroup;
 
-  getErrorMessage() {
-    if (this.heroName.hasError('required')) {
-      return 'You must enter a value';
+  constructor(
+    private _fb: FormBuilder,
+    private _herosService: HeroesService,
+    private _router: Router
+  ) {
+    this.form = this._fb.group({
+      name: ['', [Validators.required]],
+      description: ['', Validators.required],
+    });
+  }
+
+  isInvalidField(fieldName: string): boolean {
+    const field = this.form.get(fieldName);
+    return !!field && field.invalid && field.touched;
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      this._herosService.createHero({
+        id: 0,
+        name: this.form.get('name')?.value,
+        description: this.form.get('description')?.value,
+      });
+      this._router.navigate(['/']);
     }
-
-    return this.heroName.hasError('heroName') ? 'Not a valid name' : '';
   }
 }

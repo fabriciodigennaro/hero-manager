@@ -1,13 +1,19 @@
 <div class="form-container">
-    <h1>{{ action }} hero</h1>
-    <section class="form">
+    <h1>{{ action }} a hero</h1>
+    <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
         <mat-form-field>
             <mat-label>Enter your hero name</mat-label>
-            <input matInput placeholder="hero name" [formControl]="heroName" required>
-            <mat-error *ngIf="heroName.invalid">{{getErrorMessage()}}</mat-error>
-          </mat-form-field>
+            <input matInput placeholder="hero name" formControlName="name" required>
+            <mat-error *ngIf="isInvalidField('name')">Please enter a name between 3 and 20 characters.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="description-box">
+            <mat-label>Enter a short description</mat-label>
+            <input matInput formControlName="description" required>
+            <mat-error *ngIf="isInvalidField('description')">You must insert a short description minimum 20 characters.</mat-error>
+        </mat-form-field>
     
-          <button mat-raised-button color="primary">Save hero</button>
-    </section>
+          <button mat-raised-button color="primary" [disabled]="!form.valid">Save hero</button>
+    </form>
 
 </div>
