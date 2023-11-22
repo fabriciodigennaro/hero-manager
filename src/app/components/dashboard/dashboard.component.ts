@@ -70,6 +70,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._router.navigate(['/create']);
   }
 
+  redirectToEditForm(heroId: number): void {
+    this._router.navigate([`/edit/${heroId}`]);
+  }
+
   confirmDeletion(heroId: number): void {
     this.deleteHero(heroId);
   }
