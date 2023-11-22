@@ -1,8 +1,14 @@
 <section class="search-container">
   <mat-form-field class="form-field">
     <mat-label>Search a hero</mat-label>
-    <input matInput type="text" [formControl]="searchValue">
-    <button *ngIf="searchFormHasValue()" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchForm()">
+    <input matInput type="text" [formControl]="searchValue" />
+    <button
+      *ngIf="searchFormHasValue()"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="clearSearchForm()"
+    >
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
@@ -10,15 +16,27 @@
 
 <section class="list">
   <div class="header">
-    <button (click)="redirectToHeroForm()" mat-raised-button color="primary">Add hero</button>
+    <button (click)="redirectToHeroForm()" mat-raised-button color="primary">
+      Add hero
+    </button>
   </div>
   <mat-list role="list" class="list-container">
     <div *ngFor="let hero of heroes$ | async" class="row">
-      <mat-list-item role="listitem">{{ hero.name}}</mat-list-item>
+      <mat-list-item role="listitem">{{ hero.name }}</mat-list-item>
       <button mat-stroked-button>Edit</button>
-      <button mat-stroked-button color="warn" (click)="deleteHero(hero.id)">Delete</button>
+      <button
+        mat-stroked-button
+        color="warn"
+        (click)="confirmDeletion(hero.id)"
+      >
+        Delete
+      </button>
     </div>
   </mat-list>
 
-  <mat-paginator [length]=totalResults [pageSize]="resultsPerPage" (page)="handlePageEvent($event)"></mat-paginator>
+  <mat-paginator
+    [length]="totalResults"
+    [pageSize]="resultsPerPage"
+    (page)="handlePageEvent($event)"
+  ></mat-paginator>
 </section>

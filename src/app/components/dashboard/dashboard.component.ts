@@ -45,11 +45,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return this.searchValue.value != undefined && this.searchValue.value != '';
   }
 
-  private getHeroes() {
+  private getHeroes(): void {
     this.heroes$ = this._heroesService.heroesResultsPage$;
   }
 
-  private searchHeroes() {
+  private searchHeroes(): void {
     const searchValue = this.searchValue.value ?? '';
     this._heroesService.searchHeroes(
       searchValue,
@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getTotalResults() {
+  private getTotalResults(): void {
     const totalResultSubscription =
       this._heroesService.heroesTotalResults$.subscribe((newTotal) => {
         this.totalResults = newTotal;
@@ -66,13 +66,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscriptions.push(totalResultSubscription);
   }
 
-  confirmDeletion(heroId: number): void {}
-
   redirectToHeroForm(): void {
     this._router.navigate(['/create']);
   }
 
-  deleteHero(heroId: number) {
+  confirmDeletion(heroId: number): void {
+    this.deleteHero(heroId);
+  }
+
+  deleteHero(heroId: number): void {
     this._heroesService.deleteHero(heroId);
     this.searchHeroes();
   }

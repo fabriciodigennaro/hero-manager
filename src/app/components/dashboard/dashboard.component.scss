@@ -1,5 +1,10 @@
 mat-list-item {
   margin-right: 30px;
+
+  &:hover {
+    border: 1px solid #424242;
+    border-radius: 10px;
+  }
 }
 
 button {
