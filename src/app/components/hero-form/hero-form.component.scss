@@ -32,6 +32,10 @@
 
   .description-box {
     height: 200px;
+
+    textarea {
+      min-height: 150px;
+    }
   }
 
   button {

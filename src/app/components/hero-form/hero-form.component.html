@@ -11,7 +11,7 @@
 
     <mat-form-field class="description-box">
       <mat-label>Enter a short description</mat-label>
-      <input matInput formControlName="description" required />
+      <textarea matInput formControlName="description" required ></textarea>
       <mat-error *ngIf="isInvalidField('description')"
         >You must insert a short description minimum 20 characters.</mat-error
       >
