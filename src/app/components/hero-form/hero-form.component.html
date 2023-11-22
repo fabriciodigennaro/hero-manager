@@ -1,5 +1,6 @@
 <div class="form-container">
   <h1>{{ action }} a hero</h1>
+
   <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Enter your hero name</mat-label>
@@ -11,14 +12,19 @@
 
     <mat-form-field class="description-box">
       <mat-label>Enter a short description</mat-label>
-      <textarea matInput formControlName="description" required ></textarea>
+      <textarea matInput formControlName="description" required></textarea>
       <mat-error *ngIf="isInvalidField('description')"
         >You must insert a short description minimum 20 characters.</mat-error
       >
     </mat-form-field>
 
-    <button mat-raised-button color="primary" [disabled]="!form.valid">
-      Save hero
-    </button>
+    <div class="buttons">
+      <button (click)="redirectToDashboard()" mat-raised-button color="primary">
+        Cancel
+      </button>
+      <button mat-raised-button color="accent" [disabled]="!form.valid">
+        Save
+      </button>
+    </div>
   </form>
 </div>
