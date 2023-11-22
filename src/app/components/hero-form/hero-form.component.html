@@ -1,5 +1,5 @@
 <div class="form-container">
-  <h1>{{ action }} a hero</h1>
+  <h1>{{ isEditMode ? "Edit" : "Create" }} a hero</h1>
 
   <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-form-field>
