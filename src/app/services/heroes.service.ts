@@ -48,7 +48,9 @@ export class HeroesService {
   }
 
   createHero(hero: Hero): void {
-    const heroId = this.heroesDB[this.heroesDB.length - 1].id + 1;
+    const heroId = this.heroesDB.length
+      ? this.heroesDB[this.heroesDB.length - 1].id + 1
+      : 1;
     hero.id = heroId;
     this.heroesDB.push(hero);
     this.heroesResultsPageBS.next(this.heroesDB);
