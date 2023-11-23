@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 
 import { Hero } from 'src/app/interfaces/hero.interface';
 import { HeroesService } from 'src/app/services/heroes.service';
@@ -22,7 +24,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   resultsPerPage: number = 5;
   totalResults: number = 0;
 
-  constructor(private _heroesService: HeroesService, private _router: Router) {}
+  constructor(
+    private _heroesService: HeroesService,
+    private _router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.searchHeroes();
@@ -74,8 +80,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._router.navigate([`/edit/${heroId}`]);
   }
 
-  confirmDeletion(heroId: number): void {
-    this.deleteHero(heroId);
+  confirmDeletion(hero: Hero): void {
+    const dialogref = this.dialog.open(ConfirmDialogComponent, {
+      data: `Are you sure you want to remove ${hero.name} from your list of heroes?`,
+    });
+    dialogref.afterClosed().subscribe((confirmation) => {
+      if (confirmation) {
+        this.deleteHero(hero.id);
+      }
+    });
   }
 
   deleteHero(heroId: number): void {

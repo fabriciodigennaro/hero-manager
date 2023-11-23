@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {FormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatListModule} from '@angular/material/list';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const material = [
   MatToolbarModule,
@@ -17,12 +18,13 @@ const material = [
   FormsModule,
   MatInputModule,
   MatListModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDialogModule,
 ];
 
 @NgModule({
   declarations: [],
   exports: [material],
-  imports: [material]
+  imports: [material],
 })
-export class MaterialModule { }
+export class MaterialModule {}
