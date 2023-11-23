@@ -11,6 +11,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HeroFormComponent } from './components/hero-form/hero-form.component';
 import { UppercaseDirective } from './shared/directives/uppercase.directive';
 import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confirm-dialog.component';
+import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confi
     HeroFormComponent,
     UppercaseDirective,
     ConfirmDialogComponent,
+    HeroDetailComponent,
   ],
   imports: [
     BrowserModule,

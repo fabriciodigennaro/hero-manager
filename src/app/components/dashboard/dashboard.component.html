@@ -22,7 +22,7 @@
   </div>
   <mat-list role="list" class="list-container">
     <div *ngFor="let hero of heroes$ | async" class="row">
-      <mat-list-item role="listitem">{{ hero.name | titlecase}}</mat-list-item>
+      <mat-list-item (click)="openHeroDetail(hero)" role="listitem">{{ hero.name | titlecase}}</mat-list-item>
       <button mat-stroked-button (click)="redirectToEditForm(hero.id)">Edit</button>
       <button
         mat-stroked-button

@@ -72,6 +72,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscriptions.push(totalResultSubscription);
   }
 
+  openHeroDetail(hero: Hero): void {
+    this._router.navigate([`/detail/${hero.id}`]);
+  }
+
   redirectToHeroForm(): void {
     this._router.navigate(['/create']);
   }

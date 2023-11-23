@@ -31,20 +31,22 @@ export class HeroesService {
 
   getHeroById(id: number): void {
     const hero = this.heroesDB.find((hero) => hero.id == id) ?? null;
+    console.log('service get hero', hero);
+
     this.heroBS.next(hero);
   }
 
   searchHeroes(term: string, pageNumber: number, resultsPerPage: number): void {
     const trimmedTerm = term.trim();
-    const heroes = trimmedTerm.length
+    const foundHeroes = trimmedTerm.length
       ? this.getFilteredHeroesByName(trimmedTerm)
       : this.heroesDB;
     const start = this.calculatePaginatorStart(pageNumber, resultsPerPage);
     const end = this.calculatePaginatorEnd(pageNumber, resultsPerPage);
-    const paginatedHeroes = heroes.slice(start, end);
+    const paginatedHeroes = foundHeroes.slice(start, end);
 
     this.heroesResultsPageBS.next(paginatedHeroes);
-    this.heroesTotalResultsBS.next(this.heroesDB.length);
+    this.heroesTotalResultsBS.next(foundHeroes.length);
   }
 
   createHero(hero: Hero): void {
