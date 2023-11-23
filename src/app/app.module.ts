@@ -9,9 +9,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HeroFormComponent } from './components/hero-form/hero-form.component';
+import { UppercaseDirective } from './shared/directives/uppercase.directive';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, HeroFormComponent],
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    HeroFormComponent,
+    UppercaseDirective,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -4,7 +4,7 @@
   <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Enter your hero name</mat-label>
-      <input matInput placeholder="hero name" formControlName="name" required />
+      <input appUppercase matInput placeholder="hero name" formControlName="name" required />
       <mat-error *ngIf="isInvalidField('name')"
         >Please enter a name between 3 and 20 characters.</mat-error
       >
