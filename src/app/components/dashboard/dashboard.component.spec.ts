@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/app/material.module';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -8,7 +14,14 @@ describe('DashboardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardComponent]
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        MaterialModule,
+        BrowserAnimationsModule,
+        NoopAnimationsModule,
+      ],
+      declarations: [DashboardComponent],
     });
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;

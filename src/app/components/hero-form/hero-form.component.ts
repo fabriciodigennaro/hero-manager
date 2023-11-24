@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Hero } from 'src/app/interfaces/hero.interface';
 import { HeroesService } from 'src/app/services/heroes.service';
 
@@ -30,8 +30,12 @@ export class HeroFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.heroId = this.route.snapshot.params['id'];
-    this.isEditMode = this.heroId != undefined;
+    const routeParams = this.route.snapshot.params;
+    if (routeParams && routeParams['id']) {
+      this.heroId = +routeParams['id'];
+      console.log(this.heroId);
+    }
+    this.isEditMode = this.heroId != 0;
     if (this.isEditMode) {
       this.loadDataToEdit();
     }

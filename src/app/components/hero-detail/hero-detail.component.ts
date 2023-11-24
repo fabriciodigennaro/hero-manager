@@ -21,8 +21,11 @@ export class HeroDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.heroId = this.route.snapshot.params['id'];
-    this.getHero(this.heroId);
+    const routeParams = this.route.snapshot.params;
+    if (routeParams && routeParams['id']) {
+      this.heroId = +routeParams['id'];
+      this.getHero(this.heroId);
+    }
   }
 
   getHero(heroId: number): void {
