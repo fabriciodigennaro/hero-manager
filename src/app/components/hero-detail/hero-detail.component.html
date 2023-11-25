@@ -1,5 +1,6 @@
 <div class="hero-container">
     <section>
+        <h1 *ngIf="!hero">Hero not found :(</h1>
         <h1>{{ hero?.name }}</h1>
         <p>{{ hero?.description }}</p>
         <button (click)="redirectToDashboard()" mat-raised-button color="primary">Go back</button>
