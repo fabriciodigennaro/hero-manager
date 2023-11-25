@@ -6,7 +6,7 @@
       <mat-label>Enter your hero name</mat-label>
       <input appUppercase matInput placeholder="hero name" formControlName="name" required />
       <mat-error *ngIf="isInvalidField('name')"
-        >Please enter a name between 3 and 20 characters.</mat-error
+        >Name must be between 3 and 20 characters.</mat-error
       >
     </mat-form-field>
 
@@ -14,7 +14,7 @@
       <mat-label>Enter a short description</mat-label>
       <textarea matInput formControlName="description" required></textarea>
       <mat-error *ngIf="isInvalidField('description')"
-        >You must insert a short description minimum 20 characters.</mat-error
+        >Description must be between 20 and 100 characters.</mat-error
       >
     </mat-form-field>
 

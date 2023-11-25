@@ -24,8 +24,22 @@ export class HeroFormComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     this.form = this._fb.group({
-      name: ['', [Validators.required]],
-      description: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+        ],
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(20),
+          Validators.maxLength(100),
+        ],
+      ],
     });
   }
 
