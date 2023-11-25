@@ -31,4 +31,11 @@ describe('AppComponent', () => {
       'Heroes manager'
     );
   });
+
+  it('should render router-outlet tag', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
+  });
 });
