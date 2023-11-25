@@ -33,7 +33,6 @@ export class HeroFormComponent implements OnInit, OnDestroy {
     const routeParams = this.route.snapshot.params;
     if (routeParams && routeParams['id']) {
       this.heroId = +routeParams['id'];
-      console.log(this.heroId);
     }
     this.isEditMode = this.heroId != 0;
     if (this.isEditMode) {

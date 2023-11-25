@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  private subscriptions: Subscription[] = [];
+  unsubscribe = new Subject();
   heroList: Hero[] = [];
   title: string = 'Heroes manager';
   searchValue = new FormControl('');
@@ -65,11 +65,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   private getTotalResults(): void {
-    const totalResultSubscription =
-      this._heroesService.heroesTotalResults$.subscribe((newTotal) => {
+    this._heroesService.heroesTotalResults$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe((newTotal) => {
         this.totalResults = newTotal;
       });
-    this.subscriptions.push(totalResultSubscription);
   }
 
   openHeroDetail(hero: Hero): void {
@@ -101,6 +101,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.unsubscribe.next(null);
+    this.unsubscribe.complete();
   }
 }

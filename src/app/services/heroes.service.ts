@@ -31,8 +31,6 @@ export class HeroesService {
 
   getHeroById(id: number): void {
     const hero = this.heroesDB.find((hero) => hero.id == id) ?? null;
-    console.log('service get hero', hero);
-
     this.heroBS.next(hero);
   }
 
