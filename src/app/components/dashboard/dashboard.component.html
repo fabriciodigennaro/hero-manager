@@ -16,15 +16,15 @@
 
 <section class="list">
   <div class="header">
-    <button (click)="redirectToHeroForm()" mat-raised-button color="primary">
+    <button id="add-hero-btn" (click)="redirectToCreateForm()" mat-raised-button color="primary">
       Add hero
     </button>
   </div>
   <mat-list role="list" class="list-container">
     <div *ngFor="let hero of heroes$ | async" class="row">
       <mat-list-item (click)="openHeroDetail(hero)" role="listitem">{{ hero.name | titlecase}}</mat-list-item>
-      <button mat-stroked-button (click)="redirectToEditForm(hero.id)">Edit</button>
-      <button
+      <button id="edit-hero-btn" mat-stroked-button (click)="redirectToEditForm(hero.id)">Edit</button>
+      <button id="delete-hero-btn"
         mat-stroked-button
         color="warn"
         (click)="confirmDeletion(hero)"

@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._router.navigate([`/detail/${hero.id}`]);
   }
 
-  redirectToHeroForm(): void {
+  redirectToCreateForm(): void {
     this._router.navigate(['/create']);
   }
 
