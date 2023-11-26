@@ -3,21 +3,26 @@
   justify-content: center;
   padding-top: 60px;
 
+  @media (min-width: 1200px) {
+    width: 65%;
+    margin: auto;
+  }
+
   section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    width: 90%;
     min-height: 300px;
     border: 1px solid grey;
     border-radius: 10px;
     color: white;
-    padding: 60px;
+    padding: 60px 20px;
     font-size: 1rem;
 
     h1 {
-      font-size: 3rem;
+      font-size: 2rem;
     }
 
     p {

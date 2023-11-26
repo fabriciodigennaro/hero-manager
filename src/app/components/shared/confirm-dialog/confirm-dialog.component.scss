@@ -1,9 +1,9 @@
 .dialog-container {
-  min-width: 350px;
+  width: 100%;
   min-height: 150px;
   display: flex;
   flex-direction: column;
-  padding: 60px;
+  padding: 60px 20px;
 
   .buttons {
     justify-content: center;
