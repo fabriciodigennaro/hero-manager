@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 
@@ -23,6 +23,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   page: number = 1;
   resultsPerPage: number = 5;
   totalResults: number = 0;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private _heroesService: HeroesService,
@@ -68,8 +70,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._heroesService.heroesTotalResults$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((newTotal) => {
+        this.goToFistPageIfNewTotalResultsChangedAndPageIsBigger(newTotal);
         this.totalResults = newTotal;
       });
+  }
+
+  private goToFistPageIfNewTotalResultsChangedAndPageIsBigger(
+    newTotal: number
+  ) {
+    const totalResultsChanged = this.totalResults != newTotal;
+    const newMaxPage = Math.ceil(newTotal / this.resultsPerPage);
+    const currentPageIsBiggerThanNewMaxPage = this.page > newMaxPage;
+    if (totalResultsChanged && currentPageIsBiggerThanNewMaxPage) {
+      this.paginator.firstPage();
+    }
   }
 
   openHeroDetail(hero: Hero): void {
