@@ -1,0 +1,12 @@
+.dialog-container {
+  min-width: 350px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+
+  .buttons {
+    justify-content: center;
+    gap: 25px;
+  }
+}

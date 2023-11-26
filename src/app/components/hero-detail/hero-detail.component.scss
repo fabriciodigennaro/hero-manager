@@ -1,0 +1,28 @@
+.hero-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    min-height: 300px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    color: white;
+    padding: 60px;
+    font-size: 1rem;
+
+    h1 {
+      font-size: 3rem;
+    }
+
+    p {
+      margin: 50px 0;
+      line-height: 24px;
+    }
+  }
+}

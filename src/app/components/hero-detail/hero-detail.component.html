@@ -1,0 +1,8 @@
+<div class="hero-container">
+    <section>
+        <h1 *ngIf="!hero">Hero not found :(</h1>
+        <h1 *ngIf="hero">{{ hero.name }}</h1>
+        <p *ngIf="hero">{{ hero.description }}</p>
+        <button id="go-back-btn" (click)="redirectToDashboard()" mat-raised-button color="primary">Go back</button>
+    </section>
+</div>
