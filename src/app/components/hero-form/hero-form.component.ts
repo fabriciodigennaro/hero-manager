@@ -37,7 +37,7 @@ export class HeroFormComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           Validators.minLength(20),
-          Validators.maxLength(100),
+          Validators.maxLength(500),
         ],
       ],
     });
